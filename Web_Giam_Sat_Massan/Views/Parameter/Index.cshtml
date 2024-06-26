@@ -1,0 +1,223 @@
+﻿@model Web_Giam_Sat_Massan.Models.PlcDataWrite11
+@inject Web_Giam_Sat_Massan.Services.RoleService RoleService
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .container {
+        position: fixed; /* Đảm bảo container luôn ở vị trí cố định */
+        top: 120px;
+        left: 10px;
+        right: 10px;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+        color: black; /* Màu chữ */
+    }
+
+    .item{
+        width:100%;
+        height:100%;
+    }
+
+    .table-fixed  {
+        width: 100%;
+        height:100%;
+    }
+    .table-fixed tr{
+        height: 50px;
+    }
+
+    table {
+        width: 100%; /* Đặt chiều rộng cho bảng */
+        border-collapse: collapse; /* Gộp các đường viền của bảng */
+        border: 1px solid black; /* Thêm viền cho bảng */
+    }
+
+        table td {
+            padding: 5px; /* Thêm khoảng cách bên trong các ô */
+        }
+
+    .table input {
+        width: 100%; /* Đặt chiều rộng cho các ô input */
+        background-color: transparent; /* Làm nền của ô input trong suốt */
+    }
+</style>
+<div class="container">
+    <div class="item">
+        @using (Html.BeginForm("ShiftUpdate", "Parameter", FormMethod.Post))
+        {
+            <div class="form-group">
+                <table class="table">
+                    
+                    <tr>
+                        <td>
+                            Tên máy:
+                        </td>
+                        <td>
+                            @Html.DropDownList("selectedMachineId", (SelectList)ViewBag.Machines, "Chọn Máy", new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Tên ca:
+                        </td>
+                        <td>
+                            @Html.DropDownList("selectedShiftId", (SelectList)ViewBag.Shifts, "Chọn Ca", new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Mã sản phẩm:
+                        </td>
+                        <td>
+                            <select id="ProductSelect" name="selectedProductId" class="form-control">
+                                <option value="">Chọn Sản phẩm</option>
+                                @foreach (var product in ViewBag.Products)
+                                {
+                                    <option value="@product.ID" data-name="@product.Name">@product.Code</option>
+                                }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Tên sản phẩm:
+                        </td>
+                        <td>
+                            <input id="tsp"/>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <button type="submit" class="btn btn-primary">Xác nhận</button>
+        }
+    </div>
+    <div class="item">
+        @using (Html.BeginForm("PlcDataWriteUpdate", "Parameter", FormMethod.Post))
+        {
+            <div class="form-group">
+                <table class="table">
+                    <tr>
+                        <td>
+                            Tốc độ chuẩn(gói/phút):
+                        </td>
+                        <td>                                                  
+
+                            @Html.TextBoxFor(m => m.tdc)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Thời gian tính dừng máy(x0.1s):
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.tgtdm)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Thời gian chấp nhận gói(x0.1s):
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.tgcng)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Thời gian tính gói cấn(x0.1s):
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.tgtgc)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Thời gian đẩy gói cấn(x0.1s):
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.tgdgc)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Thời gian cập nhật dữ liệu từ PLC(s):
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.tgcntPLC)
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            @if (RoleService.IsUserAdmin())
+            {
+                <button type="submit" class="btn btn-primary">Xác nhận</button>
+            }
+            
+        }
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#ProductSelect').on('change', function () {
+        var selectedOption = $(this).find('option:selected');
+        var productName = selectedOption.data('name');
+        $('#tsp').val(productName);
+        
+    });
+
+</script>
+@*
+    <div class="left">
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            <table class="table">
+                <tr>
+                    <td>
+                        Tên dây chuyền:
+                    </td>
+                    <td>
+                        @Html.DropDownList("selectedLineId", (SelectList)ViewBag.Lines, "Select a Line", new { @class = "form-control" })
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    }
+
+</div>
+
+<div class="right">
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            <table class="table">
+                <tr>
+                    <td>
+                        Tên dây chuyền:
+                    </td>
+                    <td>
+                        @Html.DropDownList("selectedLineId", (SelectList)ViewBag.Lines, "Select a Line", new { @class = "form-control" })
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    }
+
+</div>
+*@
+
+
+
+

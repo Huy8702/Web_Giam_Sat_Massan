@@ -1,0 +1,18 @@
+﻿@inject Web_Giam_Sat_Massan.Services.RoleService RoleService
+
+
+
+
+
+    <ul class="nav navbar-nav navbar-right">
+            @if (RoleService.IsUserAdmin())
+            {
+                <li>
+                    <a asp-area="" asp-controller="Account" asp-action="Register">Đăng kí</a>
+                </li>              
+            }
+            <li>
+                <a asp-area="" asp-controller="Account" asp-action="Logout">Đăng xuất</a>
+            </li>
+</ul>
+

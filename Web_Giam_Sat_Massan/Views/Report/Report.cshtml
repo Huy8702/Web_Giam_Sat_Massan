@@ -1,0 +1,101 @@
+﻿@model Web_Giam_Sat_Massan.Models.ReportViewModel
+
+<head>
+    <title>@ViewData["Title"] - Web_Giam_Sat_Massan</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+
+<h1>Báo cáo sản lượng khu đóng gói</h1>
+
+@if (Model.Records != null && Model.Records.Any())
+{
+    <table class="table table-bordered table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Ngày</th>
+                <th>Ca làm việc</th>
+                <th>Thời gian bắt đầu</th>
+                <th>Thời gian kết thúc</th>
+                <th>Mã trưởng ca</th>
+                <th>Tên trưởng ca</th>
+                <th>Mã sản phẩm</th>
+                <th>Tên sản phẩm</th>
+                <th>Máy</th>
+                <th>Số lượng</th>
+                <th>Số lượng gói tốt</th>
+                <th>Hiệu suất</th>
+                <th>Số gói bị cấn gia vị</th>
+                <th>Phần trăm gói cấn gia vị</th>
+                <th>Số gói bị rỗng</th>
+                <th>Phần trăm gói rỗng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var record in Model.Records)
+            {
+                <tr>
+                    <td>@record.ID</td>
+                    <td>@record.Date.ToShortDateString()</td>
+                    <td>@record.Shift</td>
+                    <td>@record.StartTime</td>
+                    <td>@record.EndTime</td>
+                    <td>@record.ShiftLeaderCode</td>
+                    <td>@record.ShiftLeaderName</td>
+                    <td>@record.ProductCode</td>
+                    <td>@record.ProductName</td>
+                    <td>@record.Machine</td>
+                    <td>@record.sl</td>
+                    <td>@record.slt</td>
+                    <td>@record.hs</td>
+                    <td>@record.sgbcgv</td>
+                    <td>@record.ptcgv</td>
+                    <td>@record.sgbr</td>
+                    <td>@record.ptr</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (Model.Records != null && !Model.Records.Any())
+{
+    <p>No records found for the selected criteria.</p>
+}
+
+<div class="mt-3">
+    <button id="exportButton" class="btn btn-secondary">Export to Word</button>
+    
+</div>
+
+<script>
+    $(function () {
+        $('#exportButton').click(function () {
+            
+            var model = @Html.Raw(Json.Serialize(Model)) // Chuyển đổi toàn bộ Model thành JSON
+                console.log(model);
+            
+            $.ajax({
+                url: '/Report/ExportToWord', // Thay ControllerName bằng tên controller thực tế của bạn
+                method: 'POST',
+                contentType: 'application/json', // Đặt kiểu dữ liệu gửi đi là JSON
+                data: JSON.stringify(model),
+                xhrFields: {
+                    responseType: 'blob' // Đặt kiểu phản hồi là blob để xử lý file
+                },
+                success: function (data, status, xhr) {
+                    var blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = "Report.docx";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error exporting to Word:', error);
+                }
+            });
+        });
+    });
+</script>

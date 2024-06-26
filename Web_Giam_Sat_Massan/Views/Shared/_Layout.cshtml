@@ -1,0 +1,75 @@
+﻿@inject Web_Giam_Sat_Massan.Services.RoleService RoleService
+
+<!DOCTYPE html>
+<html lang="en">
+   
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Web_Giam_Sat_Massan</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    </head>
+<body>
+    <header>
+            <div class="menu">
+                <ul>
+                    
+                    <li><a asp-controller="Home" asp-action="Index">Giám sát</a></li>
+                       
+                    @if (RoleService.IsUserAdmin())
+                    {                   
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                           href="#">Cài đặt chung</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" style="display: flex; flex-direction: column; align-items: center; color: black; font-size:14px" href="/ShiftLeaders/Index">Trưởng ca</a>
+                            <a class="dropdown-item" style="display: flex; flex-direction: column; align-items: center;color: black; font-size:14px" href="/Products/Index">Sản phẩm</a>
+                            
+                        </div>
+                    </li>
+                    }
+                    <li><a asp-controller="Parameter" asp-action="Index">Thông số</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                           href="#">Ca sản xuất</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" style="display: flex; flex-direction: column; align-items: center; color: black; font-size:14px" href="/Shift1/Edit">Ca 1</a>
+                            <a class="dropdown-item" style="display: flex; flex-direction: column; align-items: center;color: black; font-size:14px" href="/Shift2/Edit">Ca 2</a>
+                        <a class="dropdown-item" style="display: flex; flex-direction: column; align-items: center;color: black; font-size:14px" href="/Shift3/Edit">Ca 3</a>
+                        </div>
+                    </li>
+                <li><a asp-controller="Report" asp-action="Index">Báo cáo</a></li>
+                    <li>
+                        <div class="login-container">
+                        @await Html.PartialAsync("_LoginPartial")
+                        </div>              
+                    </li>
+                </ul>
+          
+            </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    @*
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    *@
+    
+    
+    
+    
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

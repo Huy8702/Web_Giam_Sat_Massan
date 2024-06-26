@@ -1,0 +1,148 @@
+﻿@model Web_Giam_Sat_Massan.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+<h2>@ViewData["Title"]</h2>
+<style>
+    /* CSS */
+
+    /* Style cho phần tử h2 */
+    h2 {
+        color: #333; /* Màu chữ */
+        font-size: 24px; /* Cỡ chữ */
+        margin-bottom: 20px; /* Khoảng cách phía dưới */
+        text-align:center;
+    }
+
+    /* Style cho container row */
+    .row {
+        display: flex; /* Sử dụng flexbox để căn giữa nội dung */
+        justify-content: center; /* Căn giữa theo chiều ngang */
+        margin-top: 50px; /* Khoảng cách phía trên */
+    }
+
+    /* Style cho form */
+    form {
+        width: 100%; /* Chiều rộng */
+    }
+
+    /* Style cho nhãn (label) */
+    label {
+        font-weight: bold; /* Chữ in đậm */
+    }
+
+    /* Style cho ô nhập liệu */
+    .form-control {
+        width: 100%; /* Chiều rộng */
+        padding: 8px; /* Lề trong ô nhập liệu */
+        font-size: 16px; /* Cỡ chữ */
+        margin-bottom: 10px; /* Khoảng cách phía dưới */
+        border: 1px solid #ccc; /* Viền */
+        border-radius: 4px; /* Bo tròn viền */
+    }
+
+    /* Style cho nút Register */
+    .btn-primary {
+        width: 100%; /* Chiều rộng */
+        padding: 10px; /* Lề trong */
+        font-size: 16px; /* Cỡ chữ */
+        background-color: #007bff; /* Màu nền */
+        border: none; /* Không có viền */
+        border-radius: 4px; /* Bo tròn viền */
+        cursor: pointer; /* Con trỏ chuột */
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Màu nền khi hover */
+        }
+
+    /* Style cho thông báo lỗi */
+    .text-danger {
+        color: #dc3545; /* Màu chữ đỏ */
+        font-size: 14px; /* Cỡ chữ */
+    }
+
+    /* Style cho container của form-group */
+    .form-group {
+        margin-bottom: 20px; /* Khoảng cách phía dưới */
+    }
+
+    /* Style cho phần tử col-md-4 */
+    .col-md-4 {
+        background-color: #f8f9fa; /* Màu nền */
+        padding: 20px; /* Khoảng cách giữa lề và nội dung */
+        border-radius: 8px; /* Bo tròn viền */
+    }
+
+    /* Style cho dropdown list */
+    select.form-control {
+        width: 100%; /* Chiều rộng */
+        padding: 8px; /* Lề trong */
+        font-size: 16px; /* Cỡ chữ */
+        margin-bottom: 10px; /* Khoảng cách phía dưới */
+        border: 1px solid #ccc; /* Viền */
+        border-radius: 4px; /* Bo tròn viền */
+        -webkit-appearance: none; /* Ẩn mũi tên mặc định trên Chrome/Safari */
+        -moz-appearance: none; /* Ẩn mũi tên mặc định trên Firefox */
+        appearance: none; /* Ẩn mũi tên mặc định trên các trình duyệt khác */
+        background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 16 16" fill="%23333" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 10.5l3.823-2.309a.5.5 0 0 0 0-.848L8 5.5v1.264L6.18 3.974a.5.5 0 0 0-.36-.174H3.5a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h2.32a.5.5 0 0 0 .36-.174L8 11.236V12.5zm-5-9h8a2 2 0 0 1 1.785 2.971l-4.071 7.648a1 1 0 0 1-1.428.297l-2.066-1.45a2 2 0 0 1-.307-2.76L7 6.254V2.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v3.764l.926.648a1 1 0 0 1 .297 1.428l-4.071 7.648A2 2 0 0 1 2.5 14H1a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z"/></svg>');
+        background-size: 12px; /* Kích thước của biểu tượng mũi tên */
+        background-repeat: no-repeat; /* Không lặp lại hình nền */
+        background-position: calc(100% - 10px) center; /* Vị trí của biểu tượng mũi tên */
+    }
+
+        /* Hover style cho dropdown list */
+        select.form-control:hover {
+            border-color: #007bff; /* Màu viền khi hover */
+        }
+
+        /* Focus style cho dropdown list */
+        select.form-control:focus {
+            border-color: #007bff; /* Màu viền khi focus */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Hiệu ứng shadow khi focus */
+        }
+
+</style>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Role" class="control-label"></label>
+                <select asp-for="Role" class="form-control">
+                    <option value="Admin">Admin</option>
+                    <option value="Operator">Operator</option>
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

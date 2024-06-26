@@ -1,0 +1,121 @@
+﻿@model Web_Giam_Sat_Massan.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Web_Giam_Sat_Massan.styles.css" asp-append-version="true" />
+</head>
+<h2>@ViewData["Title"]</h2>
+<style>
+    /* 1. Style cho phần tử h2 */
+    h2 {
+        color: #333; /* Màu chữ */
+        font-size: 24px; /* Cỡ chữ */
+        margin-bottom: 20px; /* Khoảng cách phía dưới */
+        text-align:center;
+    }
+
+    /* 2. Style cho container row */
+    .row {
+        display: flex; /* Sử dụng flexbox để căn giữa nội dung */
+        justify-content: center; /* Căn giữa theo chiều ngang */
+        margin-top: 50px; /* Khoảng cách phía trên */
+    }
+
+    /* 3. Style cho form */
+    form {
+        width: 100%; /* Chiều rộng */
+    }
+
+    /* 4. Style cho nhãn (label) */
+    label {
+        font-weight: bold; /* Chữ in đậm */
+    }
+
+    /* 5. Style cho ô nhập liệu */
+    .form-control {
+        width: 100%; /* Chiều rộng */
+        padding: 8px; /* Lề trong ô nhập liệu */
+        font-size: 16px; /* Cỡ chữ */
+        margin-bottom: 10px; /* Khoảng cách phía dưới */
+        border: 1px solid #ccc; /* Viền */
+        border-radius: 4px; /* Bo tròn viền */
+    }
+
+    /* 6. Style cho nút Login */
+    .btn-primary {
+        width: 100%; /* Chiều rộng */
+        padding: 10px; /* Lề trong */
+        font-size: 16px; /* Cỡ chữ */
+        background-color: #007bff; /* Màu nền */
+        border: none; /* Không có viền */
+        border-radius: 4px; /* Bo tròn viền */
+        cursor: pointer; /* Con trỏ chuột */
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Màu nền khi hover */
+        }
+
+    /* 7. Style cho thông báo lỗi */
+    .text-danger {
+        color: #dc3545; /* Màu chữ đỏ */
+        font-size: 14px; /* Cỡ chữ */
+    }
+
+    /* 8. Style cho container của form-group */
+    .form-group {
+        margin-bottom: 20px; /* Khoảng cách phía dưới */
+    }
+
+    /* 9. Style cho phần tử div có lớp text-danger */
+    .text-danger {
+        font-size: 14px;
+        color: #dc3545; /* Màu chữ đỏ */
+    }
+
+    /* 10. Style cho phần tử col-md-4 */
+    .col-md-4 {
+        background-color: #f8f9fa; /* Màu nền */
+        padding: 20px; /* Khoảng cách giữa lề và nội dung */
+        border-radius: 8px; /* Bo tròn viền */
+    }
+
+    /* 11. Style cho phần tử form asp-action Login */
+    form[action="Login"] {
+        background-color: #ffffff; /* Màu nền */
+        padding: 20px; /* Khoảng cách giữa lề và nội dung */
+        border-radius: 8px; /* Bo tròn viền */
+    }
+
+</style>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

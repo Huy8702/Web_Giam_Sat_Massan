@@ -1,0 +1,722 @@
+﻿@model Web_Giam_Sat_Massan.Models.HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    .row{
+        border : 2px solid #000;
+    }
+
+    
+    .input{
+        font-size:8px;
+        height: 10px;
+  
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        
+    }
+
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
+
+    .container1 {
+        position: fixed; /* Đảm bảo container luôn ở vị trí cố định */
+        left: 200px;
+        right: 200px;
+        top: 150px;
+        font-size:18px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 120px;
+        color:black;
+    }
+
+    .item {
+        width: 100%;
+        height: 100%;
+    }
+    
+    
+    .container2 {
+        display: flex;
+        width: 100vw;
+        height: 100px;
+        justify-content: center; /* Căn giữa theo chiều ngang */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        position: relative;
+    }
+
+    .left {
+        position: absolute;
+        left: 0;
+    }
+
+    .right {
+        position: absolute;
+        right:0;
+    }
+    
+    .center {
+        margin: 0;
+        text-align: center;
+    }
+    .container{
+        margin: 0px;
+    }
+
+    #clockContainer1 {
+        color: black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 120px; /* Đặt chiều rộng */
+        height: 200px; /* Đặt chiều cao */
+    }
+
+    #date1, #time1 {
+        font-size: 20px;
+    }
+
+    table {
+        width: 100%; /* Đặt chiều rộng cho bảng */
+        border-collapse: collapse; /* Gộp các đường viền của bảng */
+        border: 1px solid black; /* Thêm viền cho bảng */
+    }
+
+        table td {
+            
+            padding: 5px; /* Thêm khoảng cách bên trong các ô */
+            
+        }
+
+    .table input {
+        width: 100%; /* Đặt chiều rộng cho các ô input */
+        background-color: transparent; /* Làm nền của ô input trong suốt */
+    }
+
+        .table input[readonly] {
+            cursor: not-allowed; /* Thêm biểu tượng cấm khi không thể chỉnh sửa */
+        }
+
+    .container2 .center p {
+        text-transform: uppercase; /* Viết hoa */
+        font-weight: bold; /* In đậm */
+        font-size: 26px;
+    }
+
+    #ShiftInput, #ShiftLeaderCodeInput, #ShiftLeaderNameInput, #ProductCodeInput1, #ProductNameInput1, #ProductCodeInput2, #ProductNameInput2, #connect{
+        border:none;
+        
+    }
+    #connect{
+        text-align:center;
+        font-size:20px;
+        font-weight:bold;
+    }
+
+    .btn-primary {
+        width: 100%; /* Chiều rộng */
+        padding: 10px; /* Lề trong */
+        font-size: 16px; /* Cỡ chữ */
+        border: none; /* Không có viền */
+        border-radius: 4px; /* Bo tròn viền */
+        cursor: pointer; /* Con trỏ chuột */
+        color:black;
+        display: inline-block;
+        font-weight: bold;
+    }
+
+    #btnssr{
+        display: flex;
+        gap:40px;
+
+    }
+        
+
+    #Start1, #Start2 {
+        background-color: #00bf00; /* Màu nền */
+        
+    }
+
+        #Start1:hover {
+            background-color: #00ff00; /* Màu nền khi hover */
+        }
+
+        #Start2:hover {
+            background-color: #00ff00; /* Màu nền khi hover */
+        }
+
+    #Stop1, #Stop2 {
+        background-color: #bf0000; /* Màu nền */
+    }
+
+        #Stop1:hover {
+            background-color: #ff0000; /* Màu nền khi hover */
+        }
+
+        #Stop2:hover {
+            background-color: #ff0000; /* Màu nền khi hover */
+        }
+
+    #Reset1, #Reset2 {
+        background-color: #bfbf00; /* Màu nền */
+    }
+
+        #Reset1:hover {
+            background-color: #ffff00; /* Màu nền khi hover */
+        }
+
+        #Reset2:hover {
+            background-color: #ffff00; /* Màu nền khi hover */
+        }
+ </style>
+
+
+<div class="container2">
+    <div class="left">
+        <div id="clockContainer1">
+            <div id="date1"></div>
+            <div id="time1"></div>
+            <div>
+                <input type="text" id="connect" type="text" readonly />
+            </div>
+        </div>
+    </div>
+    <div class="center">
+            <p> Hệ thống giám sát chất lượng khu bao gói</p>
+    </div>
+    <div class="right">
+        <div id="infoContainer">
+            <div class="item1">
+                <label for="ShiftInput">Ca sản xuất:</label>
+                <input type="text" id="ShiftInput" type="text" readonly />
+            </div>
+            <div class="item1">
+                <label for="ShiftLeaderCodeInput">Mã trưởng ca:</label>
+                <input type="text" id="ShiftLeaderCodeInput" type="text" readonly style="text-align: center" />
+            </div>
+            <div class="item2">
+                <label for="ShiftLeaderNameInput">Tên trưởng ca:</label>
+                <input type="text" id="ShiftLeaderNameInput" type="text" readonly />
+            </div>
+        </div>
+    </div>
+    @*
+    <div class="right">
+    <div id="infoContainer">
+    <div class="item1">
+    <label for="ShiftLeaderCode">Mã trưởng ca:</label>
+    <input type="text" id="CodeInput" />
+    </div>
+    <div class="item">
+    <label for="ShiftLeaderCode">Tên trưởng ca:</label>
+    <input type="text" id="NameInput" />
+    </div>
+
+    </div>
+    </div>
+    *@
+   
+</div>
+
+<div class="container1" id="giamsat">
+    
+    <div class="item">  
+        <p>Máy 1:</p>
+        <div>
+            <label for="ProductCodeInput1">Mã sản phẩm:</label>
+            <input type="text" id="ProductCodeInput1" type="text" readonly />
+        </div>
+        <div>
+            <label for="ProductNameInput1">Tên sản phẩm:</label>
+            <input type="text" id="ProductNameInput1" type="text" readonly />
+        </div>
+            <table class=" table">
+                <tr>
+                    <td>Sản lượng (gói):</td>
+                    <td>
+                        <input id="sl1" type="text" value="@Model.plcData.sl1" readonly/>
+                    </td>
+                </tr>              
+                <tr>
+                    <td>Số gói chuẩn (gói):</td>
+                    <td>
+                    <input id="sgc1" type="text" value="@Model.plcData.slt1" readonly />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hiệu suất (%):</td>
+                    <td>
+                    <input id="hs1" type="text" readonly />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Số gói bị cấn gia vị (gói):</td>
+                    <td>
+                    <input id="sgbcgv1" type="text" value="@Model.plcData.sgbcgv1" readonly />
+                    </td>
+                </tr>
+                <tr>
+                    <td>%Cấn gia vị (%):</td>
+                    <td>
+                    <input id="ptcgv1" type="text" value="@Model.plcData.ptcgv1" readonly />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Số gói bị rỗng (gói):</td>
+                    <td>
+                    <input id="sgbr1" type="text" value="@Model.plcData.sgr1" readonly />
+                    </td>
+                </tr>
+                <tr>
+                    <td>% Gói rỗng (%):</td>
+                    <td>
+                    <input id="ptgr1" type="text" value="@Model.plcData.ptr1" readonly />
+                    </td>
+                </tr>
+            </table>
+
+            @*
+        <div id="btnssr">
+        <button id="Start1" class="btn btn-primary">Start</button>
+        <button id="Stop1" class="btn btn-primary">Stop</button>
+        <button id="Reset1" class="btn btn-primary">Reset</button>
+        </div>
+            *@
+            
+        
+
+    </div>
+ 
+    <div class="item">
+        <p>Máy 2:</p>
+        <div>
+            <label for="ProductCodeInput2">Mã sản phẩm:</label>
+            <input type="text" id="ProductCodeInput2" type="text" readonly />
+        </div>
+        <div>
+            <label for="ProductNameInput2">Tên sản phẩm:</label>
+            <input type="text" id="ProductNameInput2" type="text" readonly />
+        </div>
+        <table class=" table">
+            <tr>
+                <td>Sản lượng (gói):</td>
+                <td>
+                    <input id="sl2" type="text" value="@Model.plcData.sl2" readonly />
+                </td>
+            </tr>
+            <tr>
+                <td>Số gói chuẩn (gói):</td>
+                <td>
+                    <input id="sgc2" type="text" value="@Model.plcData.slt2" readonly />
+                </td>
+            </tr>
+            <tr>
+                <td>Hiệu suất (%):</td>
+                <td>
+                    <input id="hs2" type="text" readonly />
+                </td>
+            </tr>
+            <tr>
+                <td>Số gói bị cấn gia vị (gói):</td>
+                <td>
+                    <input id="sgbcgv2" type="text" value="@Model.plcData.sgbcgv2" readonly />
+                </td>
+            </tr>
+            <tr>
+                <td>%Cấn gia vị (%):</td>
+                <td>
+                    <input id="ptcgv2" type="text" value="@Model.plcData.ptcgv2" readonly />
+                </td>
+            </tr>
+            <tr>
+                <td>Số gói bị rỗng (gói):</td>
+                <td>
+                    <input id="sgbr2" type="text" value="@Model.plcData.sgr2" readonly />
+                </td>
+            </tr>
+            <tr>
+                <td>% Gói rỗng (%):</td>
+                <td>
+                    <input id="ptgr2" type="text" value="@Model.plcData.ptr2" readonly />
+                </td>
+            </tr>
+        </table>
+
+        @*
+        <div id="btnssr">
+        <button id="Start2" class="btn btn-primary">Start</button>
+        <button id="Stop2" class="btn btn-primary">Stop</button>
+        <button id="Reset2" class="btn btn-primary">Reset</button>
+        </div>
+        *@
+        
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        
+        function updateData() {
+            $.ajax({
+                url: '/Home/GetData',
+                type: 'GET',
+                success: function(data) {    
+                    var realtime = new Date();
+
+                    var s1starttimepart = data.s1.startTime.split(':');
+                    var s1endtimepart = data.s1.endTime.split(':');
+                    var s1starttime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s1starttimepart[0], s1starttimepart[1], s1starttimepart[2], 0);
+                    var s1endtime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s1endtimepart[0], s1endtimepart[1], s1endtimepart[2], 0);
+
+                    var s2starttimepart = data.s2.startTime.split(':');
+                    var s2endtimepart = data.s2.endTime.split(':');
+                    var s2starttime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s2starttimepart[0], s2starttimepart[1], s2starttimepart[2], 0);
+                    var s2endtime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s2endtimepart[0], s2endtimepart[1], s2endtimepart[2], 0);
+
+                    var s3starttimepart = data.s3.startTime.split(':');
+                    var s3endtimepart = data.s3.endTime.split(':');
+                    var s3starttime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s3starttimepart[0], s3starttimepart[1], s3starttimepart[2], 0);
+                    var s3endtime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s3endtimepart[0], s3endtimepart[1], s3endtimepart[2], 0);
+
+                    var isafterstart1 = realtime > s1starttime;
+                    var isbeforeend1 = realtime < s1endtime;
+
+                    var isafterstart2 = realtime > s2starttime;
+                    var isbeforeend2 = realtime < s2endtime;
+
+                    var isafterstart3 = realtime > s3starttime;
+                    var isbeforeend3 = realtime < s3endtime;
+
+                    var slgt1 = data.plcData.slt1;
+                    var slg1 = data.plcData.sl1;
+                    var slgt2 = data.plcData.slt2;
+                    var slg2 = data.plcData.sl2;
+
+                    var h1 = Math.floor(slgt1 * 100) / slg1;
+                    var h2 = Math.floor(slgt2 * 100) / slg2;
+                    h1 = h1.toFixed(0);
+                    h2 = h2.toFixed(0);
+                    var inshift = 0;
+                    if (isafterstart1 && isbeforeend1)
+                    {
+                        inshift = 1;
+                        $('#ShiftInput').val("Ca 1");
+                        $('#ShiftLeaderCodeInput').val(data.s1.shiftLeaderCode);                       
+                        $('#ShiftLeaderNameInput').val(data.s1.shiftLeaderName);
+                        $('#ProductCodeInput1').val(data.mSProduct.product11.code);
+                        $('#ProductNameInput1').val(data.mSProduct.product11.name);
+                        $('#ProductCodeInput2').val(data.mSProduct.product21.code);
+                        $('#ProductNameInput2').val(data.mSProduct.product21.name);                 
+                    }else if (isafterstart2 && isbeforeend2)
+                    {
+                        inshift = 2;
+                        ('#ShiftInput').val("Ca 2");
+                        $('#ShiftLeaderCodeInput').val(data.s2.shiftLeaderCode);
+                        $('#ShiftLeaderNameInput').val(data.s2.shiftLeaderName);
+                        $('#ProductCodeInput1').val(data.mSProduct.product12.code);
+                        $('#ProductNameInput1').val(data.mSProduct.product12.name);
+                        $('#ProductCodeInput2').val(data.mSProduct.product22.code);
+                        $('#ProductNameInput2').val(data.mSProduct.product22.name);
+                    }else if (isafterstart3 && isbeforeend3)
+                    {
+                        inshift = 3;
+                        ('#ShiftInput').val("Ca 3");
+                        $('#ShiftLeaderCodeInput').val(data.s3.shiftLeaderCode);
+                        $('#ShiftLeaderNameInput').val(data.s3.shiftLeaderName);
+                        $('#ProductCodeInput1').val(data.mSProduct.product13.code);
+                        $('#ProductNameInput1').val(data.mSProduct.product13.name);
+                        $('#ProductCodeInput2').val(data.mSProduct.product23.code);
+                        $('#ProductNameInput2').val(data.mSProduct.product23.name);
+                    }else
+                    {
+                        inshift = 0;
+                        $('#ShiftInput').val("");
+                        $('#ShiftLeaderCodeInput').val("");
+                        $('#ShiftLeaderNameInput').val("");
+                        $('#ProductCodeInput1').val("");
+                        $('#ProductNameInput1').val("");
+                        $('#ProductCodeInput2').val("");
+                        $('#ProductNameInput2').val("");
+                        console.log(data);
+                    } 
+                    
+                    switch (inshift) {
+                        case 0:
+                            $('#sl1').val(0);
+                            $('#sgc1').val(0);
+                            $('#sgbcgv1').val(0);
+                            $('#ptcgv1').val(0);
+                            $('#sgbr1').val(0);
+                            $('#ptgr1').val(0);
+                            $('#sl2').val(0);
+                            $('#sgc2').val(0);
+                            $('#sgbcgv2').val(0);
+                            $('#ptcgv2').val(0);
+                            $('#sgbr2').val(0);
+                            $('#ptgr2').val(0);
+                            $('#hs1').val(0);
+                            $('#hs2').val(0);
+                            break;
+                        case 1:
+                        case 2:
+                        case 3:
+                            $('#sl1').val(data.plcData.sl1);
+                            $('#sgc1').val(data.plcData.slt1);
+                            $('#sgbcgv1').val(data.plcData.sgbcgv1);
+                            $('#ptcgv1').val(data.plcData.ptcgv1);
+                            $('#sgbr1').val(data.plcData.sgr1);
+                            $('#ptgr1').val(data.plcData.ptr1);
+                            $('#sl2').val(data.plcData.sl2);
+                            $('#sgc2').val(data.plcData.slt2);
+                            $('#sgbcgv2').val(data.plcData.sgbcgv2);
+                            $('#ptcgv2').val(data.plcData.ptcgv2);
+                            $('#sgbr2').val(data.plcData.sgr2);
+                            $('#ptgr2').val(data.plcData.ptr2);
+                            $('#hs1').val(h1);
+                            $('#hs2').val(h2);
+                            break;
+                    }
+
+                    if (data.isconnect) {
+                        $('#connect').val("Successfully").css('color', 'green');
+                    } else {
+                        $('#connect').val("Fail to Connect").css('color', 'red');
+                    }
+                    
+
+                    updateRecord(data);
+                    
+                    @*
+                        var realtime = new Date();
+                        var s1starttimepart = data.s1.startTime.split(':');
+                        var s1starttime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s1starttimepart[0], s1starttimepart[1], s1starttimepart[2], 0);
+
+                        var timediffmini = realtime - s1starttime;
+                        var timediffminu = Math.floor(timediffmini / 60000);
+                        var slgt1 = data.plcData.slt1
+                        var hs1 = 50 * 100 / (timediffminu * 120);
+                        $('#hs2').val(timediffminu);
+                        $('#hs1').val(hs1);
+                    *@
+
+                    
+                }
+            });           
+        }
+        setInterval(updateData, 1000);
+        setInterval(updateTime, 1000);
+        // Hiển thị thời gian ngay khi tải trang
+        updateTime();
+        function updateRecord(data) {
+            var realtime = new Date();
+
+            var s1starttimepart = data.s1.startTime.split(':');
+            var s1endtimepart = data.s1.endTime.split(':');
+            var s1starttime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s1starttimepart[0], s1starttimepart[1], s1starttimepart[2], 0);
+            var s1endtime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s1endtimepart[0], s1endtimepart[1], s1endtimepart[2], 0);
+
+            var s2starttimepart = data.s2.startTime.split(':');
+            var s2endtimepart = data.s2.endTime.split(':');
+            var s2starttime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s2starttimepart[0], s2starttimepart[1], s2starttimepart[2], 0);
+            var s2endtime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s2endtimepart[0], s2endtimepart[1], s2endtimepart[2], 0);
+
+            var s3starttimepart = data.s3.startTime.split(':');
+            var s3endtimepart = data.s3.endTime.split(':');
+            var s3starttime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s3starttimepart[0], s3starttimepart[1], s3starttimepart[2], 0);
+            var s3endtime = new Date(realtime.getFullYear(), realtime.getMonth(), realtime.getDate(), s3endtimepart[0], s3endtimepart[1], s3endtimepart[2], 0);
+            
+            var realtimeminu = Math.floor(realtime.getTime() / 1000);
+            var s1endtimeminu = Math.floor(s1endtime.getTime() / 1000);
+            var s2endtimeminu = Math.floor(s2endtime.getTime() / 1000);
+            var s3endtimeminu = Math.floor(s3endtime.getTime() / 1000);                       
+
+            var slgt1 = data.plcData.slt1;
+            var slg1 = data.plcData.sl1;
+            var slgt2 = data.plcData.slt2;
+            var slg2 = data.plcData.sl2;
+
+            var h1 = Math.floor(slgt1 * 100) / slg1;
+            var h2 = Math.floor(slgt2 * 100) / slg2;
+            h1 = h1.toFixed(0);
+            h2 = h2.toFixed(0);
+
+            var postData = {
+                sl11: data.plcData.sl1,
+                slt11: data.plcData.slt1,
+                sgbcgv11: data.plcData.sgbcgv1,
+                ptcgv11: data.plcData.ptcgv1,
+                sgr11: data.plcData.sgr1,
+                ptr11: data.plcData.ptr1,
+                hs11: h1,
+                sl22: data.plcData.sl2,
+                slt22: data.plcData.slt2,
+                sgbcgv22: data.plcData.sgbcgv2,
+                ptcgv22: data.plcData.ptcgv2,
+                sgr22: data.plcData.sgr2,
+                ptr22: data.plcData.ptr2,
+                hs22: h2
+            };
+            
+            if (realtimeminu == s1endtimeminu) {
+                // Gửi yêu cầu AJAX tới controller khi now bằng với endTime
+                $.ajax({
+                    url: '/Home/Shift1Record',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(postData),
+                    success: function (result) {
+                        // Xử lý kết quả nếu cần
+                        console.log('Action performed successfully.');
+                    },
+                    error: function (xhr, status, error) {
+                        // Xử lý lỗi nếu có
+                        console.error('Error performing action:', error);
+                    }
+                });
+            } else if (realtimeminu == s2endtimeminu) {
+                $.ajax({
+                    url: '/Home/Shift2Record',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(postData),
+                    success: function (result) {
+                        // Xử lý kết quả nếu cần
+                        console.log('Action performed successfully.');
+                    },
+                    error: function (xhr, status, error) {
+                        // Xử lý lỗi nếu có
+                        console.error('Error performing action:', error);
+                    }
+                });
+            } else if (realtimeminu == s3endtimeminu){
+                $.ajax({
+                    url: '/Home/Shift3Record',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(postData),
+                    success: function (result) {
+                        // Xử lý kết quả nếu cần
+                        console.log('Action performed successfully.');
+                    },
+                    error: function (xhr, status, error) {
+                        // Xử lý lỗi nếu có
+                        console.error('Error performing action:', error);
+                    }
+                });
+            }
+
+        }
+        
+        
+    });
+
+    function updateTime() {
+        var now = new Date();
+
+        // Lấy ngày hiện tại
+        var day = now.getDate().toString().padStart(2, '0');
+        var month = (now.getMonth() + 1).toString().padStart(2, '0'); // Tháng được tính từ 0
+        var year = now.getFullYear();
+        var dateString = day + '/' + month + '/' + year;
+
+        // Lấy giờ, phút, giây hiện tại
+        var hours = now.getHours().toString().padStart(2, '0');
+        var minutes = now.getMinutes().toString().padStart(2, '0');
+        var seconds = now.getSeconds().toString().padStart(2, '0');
+        var timeString = hours + ':' + minutes + ':' + seconds;
+
+        // Cập nhật nội dung cho phần tử HTML
+        document.getElementById('date1').innerText = dateString;
+        document.getElementById('time1').innerText = timeString;
+    }
+    // Cập nhật thời gian mỗi giây
+   @*
+        $(document).ready(function () {
+        $("#Start1").click(function () {
+
+        $.ajax({
+        url: '/Home/Start1',
+        method: 'POST',
+
+        });
+        });
+        });
+
+        $(document).ready(function () {
+        $("#Stop1").click(function () {
+
+        $.ajax({
+        url: '/Home/Stop1',
+        method: 'POST',
+
+        });
+        });
+        });
+        $(document).ready(function () {
+        $("#Reset1").click(function () {
+
+        $.ajax({
+        url: '/Home/Reset1',
+        method: 'POST',
+
+        });
+        });
+        });
+
+        $(document).ready(function () {
+        $("#Start2").click(function () {
+
+        $.ajax({
+        url: '/Home/Start2',
+        method: 'POST',
+
+        });
+        });
+        });
+
+        $(document).ready(function () {
+        $("#Stop2").click(function () {
+
+        $.ajax({
+        url: '/Home/Stop2',
+        method: 'POST',
+
+        });
+        });
+        });
+
+        $(document).ready(function () {
+        $("#Reset2").click(function () {
+
+        $.ajax({
+        url: '/Home/Reset2',
+        method: 'POST',
+
+        });
+        });
+        });
+   *@
+    
+
+    
+
+   
+    
+</script>
+
+
+
+
+
